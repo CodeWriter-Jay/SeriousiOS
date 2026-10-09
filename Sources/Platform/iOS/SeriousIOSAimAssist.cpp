@@ -1,4 +1,5 @@
 #include "SeriousIOSAimAssist.h"
+#include "SeriousIOSApplicationLifecycle.h"
 #include "SeriousIOSPlatformBridge.h"
 
 #include <algorithm>
@@ -9,6 +10,8 @@
 #include <Engine/Engine.h>
 #include <Engine/Entities/Entity.h>
 #include <Engine/Network/Network.h>
+#include <Engine/Network/PlayerTarget.h>
+#include <Engine/Network/SessionState.h>
 #include <Engine/World/World.h>
 #define SERIOUSIOS_HAS_ENGINE 1
 #else
@@ -38,8 +41,6 @@ bool gHasMockTarget = false;
 SeriousIOSAimAssistTarget gMockTarget = {};
 
 #if SERIOUSIOS_HAS_ENGINE
-extern CNetworkProvider* _pNetwork;
-
 bool queryEngineTarget(
     const SeriousIOSAimAssistConfig& config,
     SeriousIOSAimAssistTarget* outTarget) {
@@ -47,17 +48,22 @@ bool queryEngineTarget(
         return false;
     }
 
-    CEntity* playerEntity = _pNetwork->GetPlayerEntity(0);
-    if (playerEntity == nullptr) {
+    if (_pNetwork->ga_sesSessionState.ses_apltPlayers.Count() == 0) {
         return false;
     }
 
+    CPlayerTarget& playerTarget = _pNetwork->ga_sesSessionState.ses_apltPlayers[0];
+    if (!playerTarget.plt_bActive || playerTarget.plt_penPlayerEntity == nullptr) {
+        return false;
+    }
+
+    CEntity* playerEntity = reinterpret_cast<CEntity*>(playerTarget.plt_penPlayerEntity);
     CWorld* world = playerEntity->en_pwoWorld;
     if (world == nullptr) {
         return false;
     }
 
-    CPlacement3D playerPlacement = playerEntity->GetPlacement();
+    const CPlacement3D& playerPlacement = playerEntity->GetPlacement();
     FLOAT3D eyePos = playerPlacement.pl_PositionVector;
     eyePos(2) += 1.75f; // Standard standing eye height in Serious Engine
 
