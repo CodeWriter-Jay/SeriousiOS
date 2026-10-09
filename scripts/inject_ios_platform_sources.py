@@ -59,6 +59,7 @@ endif()
     ${SERIOUSIOS_PLATFORM_ROOT}/SeriousIOSSDLCompat.cpp
     ${SERIOUSIOS_PLATFORM_ROOT}/SeriousIOSSDLMouse.cpp
     ${SERIOUSIOS_PLATFORM_ROOT}/SeriousIOSSDLInjectedInput.cpp
+    ${SERIOUSIOS_PLATFORM_ROOT}/SeriousIOSAimAssist.cpp
     ${SERIOUSIOS_PLATFORM_ROOT}/SeriousIOSSDLVirtualController.cpp
     ${SERIOUSIOS_PLATFORM_ROOT}/SeriousIOSSDLAudioQueue.cpp
     ${SERIOUSIOS_PLATFORM_ROOT}/SeriousIOSSDLGLProcAddress.cpp

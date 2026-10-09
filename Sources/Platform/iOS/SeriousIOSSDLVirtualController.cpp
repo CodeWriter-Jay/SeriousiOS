@@ -42,7 +42,23 @@ void routeAction(SeriousIOSVirtualAction action, bool pressed) {
             SeriousIOS_QueueSDLKey(SDLK_RETURN, pressed);
             break;
         case SERIOUSIOS_ACTION_NEXT_WEAPON:
+            SeriousIOS_QueueSDLKey(SDLK_RIGHTBRACKET, pressed);
+            break;
         case SERIOUSIOS_ACTION_PREVIOUS_WEAPON:
+            SeriousIOS_QueueSDLKey(SDLK_LEFTBRACKET, pressed);
+            break;
+        case SERIOUSIOS_ACTION_ALT_FIRE:
+            SeriousIOS_QueueSDLMouseButton(SDL_BUTTON_RIGHT, pressed);
+            break;
+        case SERIOUSIOS_ACTION_CROUCH:
+            SeriousIOS_QueueSDLKey('c', pressed);
+            break;
+        case SERIOUSIOS_ACTION_COMPUTER:
+            SeriousIOS_QueueSDLKey(SDLK_TAB, pressed);
+            break;
+        case SERIOUSIOS_ACTION_QUICK_SAVE:
+            SeriousIOS_QueueSDLKey(SDLK_F6, pressed);
+            break;
         case SERIOUSIOS_ACTION_COUNT:
             break;
     }

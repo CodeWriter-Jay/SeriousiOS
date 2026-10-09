@@ -2,6 +2,7 @@
 
 #include <stdbool.h>
 #include <stdint.h>
+#include "SeriousIOSAimAssist.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -16,7 +17,11 @@ typedef enum SeriousIOSVirtualAction {
     SERIOUSIOS_ACTION_USE = 2,
     SERIOUSIOS_ACTION_NEXT_WEAPON = 3,
     SERIOUSIOS_ACTION_PREVIOUS_WEAPON = 4,
-    SERIOUSIOS_ACTION_COUNT = 5,
+    SERIOUSIOS_ACTION_ALT_FIRE = 5,
+    SERIOUSIOS_ACTION_CROUCH = 6,
+    SERIOUSIOS_ACTION_COMPUTER = 7,
+    SERIOUSIOS_ACTION_QUICK_SAVE = 8,
+    SERIOUSIOS_ACTION_COUNT = 9,
 } SeriousIOSVirtualAction;
 
 bool SeriousIOS_ConfigurePaths(

@@ -77,6 +77,14 @@ python3 "$REPOSITORY_ROOT/scripts/inject_ios_touch_input_fixes.py" \
   --self-test \
   "$DIAGNOSTIC_APP_SOURCE" \
   2>&1 | tee "$EVIDENCE/${ENCOUNTER}-touch-input-fixes-transform.log"
+python3 "$REPOSITORY_ROOT/scripts/inject_ios_aim_assist.py" \
+  --self-test \
+  "$DIAGNOSTIC_APP_SOURCE" \
+  2>&1 | tee "$EVIDENCE/${ENCOUNTER}-aim-assist-transform.log"
+python3 "$REPOSITORY_ROOT/scripts/inject_ios_weapon_controls.py" \
+  --self-test \
+  "$DIAGNOSTIC_APP_SOURCE" \
+  2>&1 | tee "$EVIDENCE/${ENCOUNTER}-weapon-controls-transform.log"
 
 grep -Fq '[self hasCompleteGameData]' "$DIAGNOSTIC_APP_SOURCE"
 grep -Fq 'Levels/01_Hatshepsut.wld' "$DIAGNOSTIC_APP_SOURCE"
@@ -98,6 +106,14 @@ grep -Fq 'button.exclusiveTouch = NO;' "$DIAGNOSTIC_APP_SOURCE"
 grep -Fq 'const double accumulatedX = -yawRate * deltaTime' "$DIAGNOSTIC_APP_SOURCE"
 grep -Fq 'const double accumulatedY = -pitchRate * deltaTime' "$DIAGNOSTIC_APP_SOURCE"
 grep -Fq 'axis_sign=-1' "$DIAGNOSTIC_APP_SOURCE"
+grep -Fq 'SeriousIOS.AimAssistEnabled' "$DIAGNOSTIC_APP_SOURCE"
+grep -Fq 'SeriousIOS.AimAssistStrength' "$DIAGNOSTIC_APP_SOURCE"
+grep -Fq 'aim-assist-switch' "$DIAGNOSTIC_APP_SOURCE"
+grep -Fq 'next-weapon' "$DIAGNOSTIC_APP_SOURCE"
+grep -Fq 'prev-weapon' "$DIAGNOSTIC_APP_SOURCE"
+grep -Fq 'pause-edit-controls' "$DIAGNOSTIC_APP_SOURCE"
+grep -Fq 'control-size-label' "$DIAGNOSTIC_APP_SOURCE"
+grep -Fq 'export-diagnostics-button' "$DIAGNOSTIC_APP_SOURCE"
 if grep -Eq "SeriousIOS_QueueSDLKey\('[wsad]'" "$DIAGNOSTIC_APP_SOURCE"; then
   echo "generated host still contains digital WASD movement" >&2
   exit 1

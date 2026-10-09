@@ -1,0 +1,15 @@
+# Python
+__pycache__/
+*.py[cod]
+
+# Build directories and artifacts
+build/
+build-*/
+DerivedData/
+*.o
+*.a
+*.ipa
+Payload/
+
+# macOS
+.DS_Store

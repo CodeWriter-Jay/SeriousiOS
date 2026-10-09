@@ -75,6 +75,14 @@ python3 "$REPOSITORY_ROOT/scripts/inject_ios_touch_input_fixes.py" \
   --self-test \
   "$DIAGNOSTIC_APP_SOURCE" \
   2>&1 | tee "$EVIDENCE/${ENCOUNTER}-touch-input-fixes-transform.log"
+python3 "$REPOSITORY_ROOT/scripts/inject_ios_aim_assist.py" \
+  --self-test \
+  "$DIAGNOSTIC_APP_SOURCE" \
+  2>&1 | tee "$EVIDENCE/${ENCOUNTER}-aim-assist-transform.log"
+python3 "$REPOSITORY_ROOT/scripts/inject_ios_weapon_controls.py" \
+  --self-test \
+  "$DIAGNOSTIC_APP_SOURCE" \
+  2>&1 | tee "$EVIDENCE/${ENCOUNTER}-weapon-controls-transform.log"
 
 grep -Fq 'SeriousIOS_ApplicationComputerActive()' "$DIAGNOSTIC_APP_SOURCE"
 grep -Fq 'SeriousIOS_SetVirtualMovement((float)forward, (float)right)' "$DIAGNOSTIC_APP_SOURCE"
@@ -83,6 +91,14 @@ grep -Fq '#import <CoreMotion/CoreMotion.h>' "$DIAGNOSTIC_APP_SOURCE"
 grep -Fq 'controls_editor_opened' "$DIAGNOSTIC_APP_SOURCE"
 grep -Fq 'SeriousIOS.GyroSensitivity' "$DIAGNOSTIC_APP_SOURCE"
 grep -Fq 'SeriousIOS.TouchAimSensitivity' "$DIAGNOSTIC_APP_SOURCE"
+grep -Fq 'SeriousIOS.AimAssistEnabled' "$DIAGNOSTIC_APP_SOURCE"
+grep -Fq 'SeriousIOS.AimAssistStrength' "$DIAGNOSTIC_APP_SOURCE"
+grep -Fq 'aim-assist-switch' "$DIAGNOSTIC_APP_SOURCE"
+grep -Fq 'next-weapon' "$DIAGNOSTIC_APP_SOURCE"
+grep -Fq 'prev-weapon' "$DIAGNOSTIC_APP_SOURCE"
+grep -Fq 'pause-edit-controls' "$DIAGNOSTIC_APP_SOURCE"
+grep -Fq 'control-size-label' "$DIAGNOSTIC_APP_SOURCE"
+grep -Fq 'export-diagnostics-button' "$DIAGNOSTIC_APP_SOURCE"
 grep -Fq 'pauseButtonLongPressed:' "$DIAGNOSTIC_APP_SOURCE"
 grep -Fq 'symbol:@"scope"' "$DIAGNOSTIC_APP_SOURCE"
 grep -Fq 'button.exclusiveTouch = NO;' "$DIAGNOSTIC_APP_SOURCE"

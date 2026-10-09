@@ -377,6 +377,7 @@ def transform(path: Path, build_identifier: str) -> None:
     _diagnosticsButton.titleLabel.font = [UIFont monospacedSystemFontOfSize:12.0 weight:UIFontWeightBold];
     _diagnosticsButton.configuration = [UIButtonConfiguration tintedButtonConfiguration];
     _diagnosticsButton.alpha = 0.72;
+    _diagnosticsButton.hidden = YES;
     [_diagnosticsButton setTitle:@"LOG" forState:UIControlStateNormal];
     [_diagnosticsButton addTarget:self
                            action:@selector(exportDiagnostics)

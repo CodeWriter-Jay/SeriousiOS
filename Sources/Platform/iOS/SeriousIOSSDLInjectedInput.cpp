@@ -44,6 +44,8 @@ SDL_Scancode scancodeForKey(SDL_Keycode key) {
         case SDLK_PAUSE: return SDL_SCANCODE_PAUSE;
         case SDLK_LEFTBRACKET: return SDL_SCANCODE_LEFTBRACKET;
         case SDLK_RIGHTBRACKET: return SDL_SCANCODE_RIGHTBRACKET;
+        case SDLK_TAB: return SDL_SCANCODE_TAB;
+        case SDLK_F6: return SDL_SCANCODE_F6;
         default: break;
     }
     if ((key & SDLK_SCANCODE_MASK) != 0) {
@@ -129,6 +131,7 @@ extern "C" void SeriousIOS_QueueSDLMouseButton(uint8_t button, bool pressed) {
 }
 
 extern "C" void SeriousIOS_AddSDLRelativeMouseDelta(int deltaX, int deltaY) {
+    SeriousIOS_ApplyAimAssistFilter(&deltaX, &deltaY);
     gRelativeMouseX.fetch_add(deltaX, std::memory_order_relaxed);
     gRelativeMouseY.fetch_add(deltaY, std::memory_order_relaxed);
 }
