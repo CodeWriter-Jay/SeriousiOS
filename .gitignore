@@ -4,6 +4,7 @@ __pycache__/
 
 # Build directories and artifacts
 build/
+dist/
 build-*/
 DerivedData/
 *.o
