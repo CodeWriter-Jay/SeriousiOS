@@ -68,7 +68,7 @@ bool queryEngineTarget(
         std::sin(pitchRad),
         -std::cos(headingRad) * std::cos(pitchRad));
 
-    CWorld* world = playerEntity->en_pWorld;
+    CWorld* world = playerEntity->en_pwoWorld;
     if (world == nullptr) {
         return false;
     }
@@ -77,14 +77,14 @@ bool queryEngineTarget(
     SeriousIOSAimAssistTarget bestTarget = {};
 
     // Scan entities in the active world
-    FOREACHINLIST(CEntity, en_lnInWorld, world->wo_lhEntities, itEntity) {
+    {FOREACHINCONTAINER(world->wo_cenEntities, CEntity, itEntity) {
         CEntity* target = itEntity;
         if (target == nullptr || target == playerEntity) {
             continue;
         }
 
         // Target must be alive and an enemy/monster
-        if ((target->en_flFlags & ENF_ALIVE) == 0) {
+        if ((target->en_ulFlags & ENF_ALIVE) == 0) {
             continue;
         }
 
@@ -109,11 +109,9 @@ bool queryEngineTarget(
 
         // Line-of-sight ray check to avoid snapping behind walls
         CCastRay ray(playerEntity, eyePos, targetPos);
-        ray.cr_ttHitModels = CWorld::TT_COLLISIONBOX;
-        if (world->CastRay(ray)) {
-            if (ray.cr_penHit != target) {
-                continue;
-            }
+        world->CastRay(ray);
+        if (ray.cr_penHit != nullptr && ray.cr_penHit != target) {
+            continue;
         }
 
         const float proximity = 1.0f - (angleDegrees / config.maxAngleDegrees);
@@ -137,7 +135,7 @@ bool queryEngineTarget(
             bestTarget.deltaYawDegrees = deltaYaw;
             bestTarget.deltaPitchDegrees = targetPitch - pitch;
         }
-    }
+    }}
 
     if (bestTarget.hasTarget && outTarget != nullptr) {
         *outTarget = bestTarget;
